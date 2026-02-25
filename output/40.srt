@@ -1,0 +1,12 @@
+1
+00:00:00,000 --> 00:00:02,560
+The robot tracks the line using optical sensors
+
+2
+00:00:02,760 --> 00:00:04,879
+and the AI optimizes the smart home.
+
+3
+00:00:05,320 --> 00:00:07,320
+Computer activates scenario 4.
+

@@ -1,6 +1,7 @@
 import os
 import sys
 import whisper
+from subtitle_cleaner import clean_segments
 from src.srt_writer import write_srt
 
 
@@ -22,7 +23,7 @@ def transcribe_to_srt(input_path: str, output_folder: str = "output"):
     print("[INFO] Transcribing audio...")
     result = model.transcribe(
     input_path,
-    language="en",     
+    language="ml",     
     task="transcribe"
 )
 
@@ -39,7 +40,7 @@ def transcribe_to_srt(input_path: str, output_folder: str = "output"):
 if __name__ == "__main__":
     # command line usage
     if len(sys.argv) < 2:
-        print("Usage: python -m src.transcribe input/sample.mp4")
+        print("Usage: python -m src.transcribe input/video_20260130_203537 copy.mp4")
         sys.exit(1)
 
     input_file = sys.argv[1]
