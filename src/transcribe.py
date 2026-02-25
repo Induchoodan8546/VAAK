@@ -1,7 +1,7 @@
 import os
 import sys
 import whisper
-from subtitle_cleaner import clean_segments
+from src.subtitle_cleaner import clean_segments
 from src.srt_writer import write_srt
 
 
@@ -22,17 +22,19 @@ def transcribe_to_srt(input_path: str, output_folder: str = "output"):
 
     print("[INFO] Transcribing audio...")
     result = model.transcribe(
-    input_path,
-    language="ml",     
-    task="transcribe"
+    input_path,     
+    task="translate"
 )
 
 
     # Whisper returns segments with timestamps + text
     segments = result["segments"]
 
+    print("[INFO] Cleaning subtitles for cinematic format...")
+    cleaned_segments = clean_segments(segments)
+
     print("[INFO] Writing subtitle file...")
-    write_srt(segments, output_srt)
+    write_srt(cleaned_segments, output_srt)
 
     print("[DONE] Subtitle file created:", output_srt)
 
