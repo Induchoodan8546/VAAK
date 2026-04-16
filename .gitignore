@@ -201,6 +201,10 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# Local media inputs (keep generated subtitles/versioned code only)
+input/*.mp4
+input/*.aac
+
 # Marimo
 marimo/_static/
 marimo/_lsp/

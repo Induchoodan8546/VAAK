@@ -12,22 +12,32 @@ def clean_text(text: str) -> str:
     return text
 
 
+MAX_CHARS_PER_LINE = 42
+
 def split_text_balanced(text: str):
-    """
-    Split long subtitle text into balanced two-line format.
-    """
-    if len(text) <= MAX_CHARS_PER_LINE:
-        return [text]
-
     words = text.split()
-    mid = len(words) // 2
+    lines = []
+    current_line = ""
 
-    # try to split near middle without breaking words
-    line1 = " ".join(words[:mid])
-    line2 = " ".join(words[mid:])
+    for word in words:
+        # If adding this word exceeds limit → new line
+        if len(current_line) + len(word) + 1 > MAX_CHARS_PER_LINE:
+            lines.append(current_line.strip())
+            current_line = word
+        else:
+            current_line += (" " + word if current_line else word)
 
-    return [line1, line2]
+    if current_line:
+        lines.append(current_line.strip())
 
+    # 🎬 Enforce max 2 lines (cinematic rule)
+    if len(lines) > 2:
+        return [
+            lines[0],
+            " ".join(lines[1:])
+        ]
+
+    return lines
 
 def enforce_min_duration(segments):
     """
