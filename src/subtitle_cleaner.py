@@ -1,48 +1,65 @@
 # src/subtitle_cleaner.py
 
+import re
+
 MAX_CHARS_PER_LINE = 42
-MIN_DURATION = 1.0  # seconds
+MIN_DURATION = 1.0
 
 
 def clean_text(text: str) -> str:
-    """Basic text cleanup for cinematic subtitles."""
     text = text.strip()
     if text:
         text = text[0].upper() + text[1:]
-    return text
+    return " ".join(text.split())
 
 
-MAX_CHARS_PER_LINE = 42
+def merge_segments(segments):
+    merged = []
+    buffer = None
+
+    for seg in segments:
+        text = seg["text"].strip()
+
+        if not buffer:
+            buffer = seg.copy()
+            continue
+
+        if (
+            len(buffer["text"]) < 40 or
+            not buffer["text"].endswith((".", "!", "?"))
+        ):
+            buffer["end"] = seg["end"]
+            buffer["text"] += " " + text
+        else:
+            merged.append(buffer)
+            buffer = seg.copy()
+
+    if buffer:
+        merged.append(buffer)
+
+    return merged
+
 
 def split_text_balanced(text: str):
+    # Try punctuation-based split
+    parts = re.split(r'([,.;!?])', text)
+
+    if len(parts) >= 3:
+        first = parts[0] + parts[1]
+        second = "".join(parts[2:])
+        return [first.strip(), second.strip()]
+
+    # fallback split
     words = text.split()
-    lines = []
-    current_line = ""
+    mid = len(words) // 2
 
-    for word in words:
-        # If adding this word exceeds limit → new line
-        if len(current_line) + len(word) + 1 > MAX_CHARS_PER_LINE:
-            lines.append(current_line.strip())
-            current_line = word
-        else:
-            current_line += (" " + word if current_line else word)
+    return [
+        " ".join(words[:mid]),
+        " ".join(words[mid:])
+    ]
 
-    if current_line:
-        lines.append(current_line.strip())
-
-    # 🎬 Enforce max 2 lines (cinematic rule)
-    if len(lines) > 2:
-        return [
-            lines[0],
-            " ".join(lines[1:])
-        ]
-
-    return lines
 
 def enforce_min_duration(segments):
-    """
-    Ensure subtitles stay on screen long enough to read.
-    """
     new_segments = []
 
     for seg in segments:
@@ -62,22 +79,18 @@ def enforce_min_duration(segments):
 
 
 def clean_segments(segments):
-    """
-    Main Phase 1.5 function:
-    Takes Whisper segments and returns cinematic subtitles.
-    """
+    segments = merge_segments(segments)
+
     cleaned = []
 
     for seg in segments:
         text = clean_text(seg["text"])
         lines = split_text_balanced(text)
 
-        combined_text = "\n".join(lines)
-
         cleaned.append({
             "start": seg["start"],
             "end": seg["end"],
-            "text": combined_text
+            "text": "\n".join(lines)
         })
 
     cleaned = enforce_min_duration(cleaned)
