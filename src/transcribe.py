@@ -9,7 +9,7 @@ from src.srt_writer import write_srt
 from src.translator import load_translator, translate_segments
 
 
-def transcribe_to_srt(input_path: str, target_lang=None, source_lang="ml"):
+def transcribe_to_srt(input_path: str, target_lang=None, source_lang="en"):
     
     if not os.path.exists(input_path):
         raise FileNotFoundError(f"File not found: {input_path}")
