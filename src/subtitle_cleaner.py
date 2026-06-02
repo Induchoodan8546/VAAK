@@ -1,98 +1,76 @@
-# src/subtitle_cleaner.py
-
 import re
 
-MAX_CHARS_PER_LINE = 42
+MAX_WORDS = 12
 MIN_DURATION = 1.0
 
 
-def clean_text(text: str) -> str:
+def clean_text(text):
     text = text.strip()
+    text = " ".join(text.split())
+
     if text:
         text = text[0].upper() + text[1:]
-    return " ".join(text.split())
+
+    return text
 
 
-def merge_segments(segments):
-    merged = []
-    buffer = None
+def split_long_subtitle(text):
 
-    for seg in segments:
-        text = seg["text"].strip()
-
-        if not buffer:
-            buffer = seg.copy()
-            continue
-
-        if (
-            len(buffer["text"]) < 40 or
-            not buffer["text"].endswith((".", "!", "?"))
-        ):
-            buffer["end"] = seg["end"]
-            buffer["text"] += " " + text
-        else:
-            merged.append(buffer)
-            buffer = seg.copy()
-
-    if buffer:
-        merged.append(buffer)
-
-    return merged
-
-
-def split_text_balanced(text: str):
-    # Try punctuation-based split
-    parts = re.split(r'([,.;!?])', text)
-
-    if len(parts) >= 3:
-        first = parts[0] + parts[1]
-        second = "".join(parts[2:])
-        return [first.strip(), second.strip()]
-
-    # fallback split
     words = text.split()
-    mid = len(words) // 2
 
-    return [
-        " ".join(words[:mid]),
-        " ".join(words[mid:])
-    ]
+    if len(words) <= MAX_WORDS:
+        return [text]
+
+    chunks = []
+
+    for i in range(0, len(words), MAX_WORDS):
+        chunk = " ".join(words[i:i + MAX_WORDS])
+        chunks.append(chunk)
+
+    return chunks
 
 
 def enforce_min_duration(segments):
-    new_segments = []
+
+    result = []
 
     for seg in segments:
+
         start = seg["start"]
         end = seg["end"]
 
         if end - start < MIN_DURATION:
             end = start + MIN_DURATION
 
-        new_segments.append({
+        result.append({
             "start": start,
             "end": end,
             "text": seg["text"]
         })
 
-    return new_segments
+    return result
 
 
 def clean_segments(segments):
-    segments = merge_segments(segments)
 
     cleaned = []
 
     for seg in segments:
+
         text = clean_text(seg["text"])
-        lines = split_text_balanced(text)
 
-        cleaned.append({
-            "start": seg["start"],
-            "end": seg["end"],
-            "text": "\n".join(lines)
-        })
+        parts = split_long_subtitle(text)
 
-    cleaned = enforce_min_duration(cleaned)
+        duration = seg["end"] - seg["start"]
 
-    return cleaned
+        part_duration = duration / len(parts)
+
+        for idx, part in enumerate(parts):
+
+            cleaned.append({
+                "start": seg["start"] + idx * part_duration,
+                "end": seg["start"] + (idx + 1) * part_duration,
+                "text": part
+            })
+
+    return enforce_min_duration(cleaned)
