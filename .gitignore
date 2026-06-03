@@ -204,6 +204,7 @@ cython_debug/
 # Local media inputs (keep generated subtitles/versioned code only)
 input/*.mp4
 input/*.aac
+input/*.mkv
 
 # Marimo
 marimo/_static/

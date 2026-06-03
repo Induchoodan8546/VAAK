@@ -1,0 +1,80 @@
+1
+00:00:00,000 --> 00:00:03,120
+Bonjour madame, c'est ici pour la réunion ?
+
+2
+00:00:03,120 --> 00:00:05,780
+Bonjour, oui, c'est ici.
+
+3
+00:00:06,419 --> 00:00:07,919
+Je dois faire quoi ?
+
+4
+00:00:07,919 --> 00:00:09,820
+Vous pouvez écrire votre nom ici.
+
+5
+00:00:10,359 --> 00:00:11,359
+D'accord.
+
+6
+00:00:11,419 --> 00:00:13,540
+Merci, vous pouvez attendre un peu.
+
+7
+00:00:14,099 --> 00:00:15,099
+Merci beaucoup.
+
+8
+00:00:16,800 --> 00:00:18,879
+Bonjour madame Hélène, installez-vous.
+
+9
+00:00:19,480 --> 00:00:20,480
+Bonjour.
+
+10
+00:00:20,800 --> 00:00:22,120
+Globalement, ça va bien.
+
+11
+00:00:22,719 --> 00:00:23,719
+Ah, super.
+
+12
+00:00:23,980 --> 00:00:26,620
+Votre fils travaille bien, il participe aussi.
+
+13
+00:00:27,260 --> 00:00:28,260
+C'est bien.
+
+14
+00:00:27,719 --> 00:00:30,679
+Mais il a encore des difficultés en lecture.
+
+15
+00:00:31,419 --> 00:00:33,500
+Oui, il est dyslexique.
+
+16
+00:00:34,119 --> 00:00:35,119
+Oui, je sais.
+
+17
+00:00:35,579 --> 00:00:37,259
+On adapte certaines activités.
+
+18
+00:00:38,019 --> 00:00:40,700
+Et à l'école, ça se passe bien avec les autres ?
+
+19
+00:00:40,700 --> 00:00:41,700
+Oui, très bien.
+
+20
+00:00:42,200 --> 00:00:43,759
+Il est gentil et sociable.
+

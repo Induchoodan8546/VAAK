@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Debug current file (venv)",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "${workspaceFolder}\\.venv\\Scripts\\python.exe"
+        }
+    ]
+}
