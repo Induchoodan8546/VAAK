@@ -3,6 +3,7 @@
 import os
 import sys
 
+
 from faster_whisper import WhisperModel
 
 from src.subtitle_cleaner import clean_segments
@@ -34,7 +35,7 @@ def transcribe_to_srt(input_path: str):
     model = WhisperModel(
         "large-v3",
         device="cpu",
-        compute_type="int8"
+        compute_type="float32"
     )
 
     print("[INFO] Transcribing audio...")
@@ -43,7 +44,8 @@ def transcribe_to_srt(input_path: str):
         input_path,
         beam_size=5
     )
-
+    print("Detected language:", info.language)
+    print("Probability:", info.language_probability)
     print(
         f"[INFO] Detected language: {info.language}"
     )
