@@ -6,3 +6,4 @@ imageio-ffmpeg
 transformers
 sentencepiece
 whisperx
+langcodes

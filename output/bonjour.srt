@@ -1,80 +1,80 @@
 1
 00:00:00,000 --> 00:00:03,120
-Bonjour madame, c'est ici pour la réunion ?
+Hello, ma'am, is this the meeting?
 
 2
 00:00:03,120 --> 00:00:05,780
-Bonjour, oui, c'est ici.
+Hello, yes, this is it.
 
 3
 00:00:06,419 --> 00:00:07,919
-Je dois faire quoi ?
+What do you want me to do?
 
 4
 00:00:07,919 --> 00:00:09,820
-Vous pouvez écrire votre nom ici.
+You can write your name here.
 
 5
 00:00:10,359 --> 00:00:11,359
-D'accord.
+- I'll take it from here.
 
 6
 00:00:11,419 --> 00:00:13,540
-Merci, vous pouvez attendre un peu.
+Thank you, you can wait a while.
 
 7
 00:00:14,099 --> 00:00:15,099
-Merci beaucoup.
+Thank you very much.
 
 8
 00:00:16,800 --> 00:00:18,879
-Bonjour madame Hélène, installez-vous.
+Hello, Madame Hélène, please sit down.
 
 9
 00:00:19,480 --> 00:00:20,480
-Bonjour.
+- How are you?
 
 10
 00:00:20,800 --> 00:00:22,120
-Globalement, ça va bien.
+Overall, it's all right.
 
 11
 00:00:22,719 --> 00:00:23,719
-Ah, super.
+Oh, that's great.
 
 12
 00:00:23,980 --> 00:00:26,620
-Votre fils travaille bien, il participe aussi.
+Your son is doing well, he's participating too.
 
 13
 00:00:27,260 --> 00:00:28,260
-C'est bien.
+That's good.
 
 14
 00:00:27,719 --> 00:00:30,679
-Mais il a encore des difficultés en lecture.
+But he still has trouble reading.
 
 15
 00:00:31,419 --> 00:00:33,500
-Oui, il est dyslexique.
+Yes, he is dyslexic.
 
 16
 00:00:34,119 --> 00:00:35,119
-Oui, je sais.
+Yeah, I know, I know.
 
 17
 00:00:35,579 --> 00:00:37,259
-On adapte certaines activités.
+We're adjusting some activities.
 
 18
 00:00:38,019 --> 00:00:40,700
-Et à l'école, ça se passe bien avec les autres ?
+And at school, are you getting along with the others?
 
 19
 00:00:40,700 --> 00:00:41,700
-Oui, très bien.
+Yes, very well.
 
 20
 00:00:42,200 --> 00:00:43,759
-Il est gentil et sociable.
+He's kind and sociable.
 

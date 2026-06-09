@@ -8,9 +8,9 @@ from faster_whisper import WhisperModel
 
 from src.subtitle_cleaner import clean_segments
 from src.srt_writer import write_srt
+from src.translator import translate_segments
 
-
-def transcribe_to_srt(input_path: str):
+def transcribe_to_srt(input_path: str,target_lang = None):
 
     # Check input
     if not os.path.exists(input_path):
@@ -49,6 +49,8 @@ def transcribe_to_srt(input_path: str):
     print(
         f"[INFO] Detected language: {info.language}"
     )
+    source_lang = info.language
+    
 
     segments = []
 
@@ -59,6 +61,21 @@ def transcribe_to_srt(input_path: str):
             "end": seg.end,
             "text": seg.text.strip()
         })
+    if target_lang:
+
+     print(
+        f"[INFO] Translating "
+        f"{source_lang} -> {target_lang}"
+    )
+
+     segments = translate_segments(
+        segments,
+        source_lang,
+        target_lang
+    )
+
+   
+    
 
     print(
         f"[INFO] Segments detected: {len(segments)}"
@@ -98,4 +115,12 @@ if __name__ == "__main__":
 
     input_file = sys.argv[1]
 
-    transcribe_to_srt(input_file)
+target_lang = None
+
+if len(sys.argv) >= 3:
+    target_lang = sys.argv[2]
+
+transcribe_to_srt(
+    input_file,
+    target_lang
+)
