@@ -10,7 +10,7 @@ from src.subtitle_cleaner import clean_segments
 from src.srt_writer import write_srt
 from src.translator import translate_segments
 
-def transcribe_to_srt(input_path: str,target_lang = None):
+def transcribe_to_srt(input_path: str,target_lang = None, translate = False):
 
     # Check input
     if not os.path.exists(input_path):
@@ -23,7 +23,16 @@ def transcribe_to_srt(input_path: str,target_lang = None):
         os.path.basename(input_path)
     )[0]
 
-    output_srt = os.path.join(
+    if translate:
+
+        output_srt = os.path.join(
+        "output",
+        f"{base_name}_english.srt"
+    )
+
+    else:
+
+        output_srt = os.path.join(
         "output",
         f"{base_name}.srt"
     )
@@ -38,11 +47,17 @@ def transcribe_to_srt(input_path: str,target_lang = None):
         compute_type="float32"
     )
 
+
     print("[INFO] Transcribing audio...")
+    task = (
+    "translate"
+    if translate
+    else "transcribe")
 
     segments_generator, info = model.transcribe(
         input_path,
-        beam_size=5
+        beam_size=5,
+        task = task
     )
     print("Detected language:", info.language)
     print("Probability:", info.language_probability)
@@ -108,19 +123,26 @@ if __name__ == "__main__":
 
         print(
             "Usage:\n"
-            "python -m src.transcribe input.mp4"
+            "python -m src.transcribe video.mp4\n"
+            "python -m src.transcribe video.mp4 translate"
         )
 
         sys.exit(1)
 
     input_file = sys.argv[1]
 
-target_lang = None
+    translate_mode = False
 
-if len(sys.argv) >= 3:
-    target_lang = sys.argv[2]
+    if (
+        len(sys.argv) >= 3
+        and
+        sys.argv[2].lower()
+        == "translate"
+    ):
 
-transcribe_to_srt(
-    input_file,
-    target_lang
-)
+        translate_mode = True
+
+    transcribe_to_srt(
+        input_file,
+        translate=translate_mode
+    )

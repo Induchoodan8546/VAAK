@@ -10,7 +10,24 @@ import langcodes
 MODEL_NAME = (
     "facebook/nllb-200-distilled-600M"
 )
-
+LANG_MAP = {
+    "en": "eng_Latn",
+    "fr": "fra_Latn",
+    "de": "deu_Latn",
+    "es": "spa_Latn",
+    "nl": "nld_Latn",
+    "ru": "rus_Cyrl",
+    "ko": "kor_Hang",
+    "hi": "hin_Deva",
+    "id": "ind_Latn",
+    "ja": "jpn_Jpan",
+    "zh": "zho_Hans",
+    "ta": "tam_Taml",
+    "ml": "mal_Mlym",
+    "ar": "arb_Arab",
+    "pt": "por_Latn",
+    "it": "ita_Latn"
+}
 tokenizer = None
 model = None
 
@@ -55,31 +72,16 @@ def resolve_nllb_code(
     whisper_lang
 ):
 
-    tokenizer, model = load_translator()
+    code = LANG_MAP.get(
+        whisper_lang
+    )
 
-    try:
+    print(
+        f"[DEBUG] {whisper_lang} -> {code}"
+    )
 
-        language = (
-            langcodes.Language
-            .get(whisper_lang)
-        )
-
-        language_name = (
-            language.language
-        )
-
-        for code in NLLB_CODES:
-
-            if code.startswith(
-                language_name
-            ):
-                return code
-
-    except Exception:
-
-        pass
-
-    return None
+    return code
+    
 
 
 def translate_text(
@@ -194,3 +196,64 @@ def translate_segments(
         })
 
     return translated_segments
+if __name__ == "__main__":
+
+    scene = """
+시작하기 전에 휴대폰 수거부터 해야 할 것 같습니다
+
+전화! 휴대폰 제출합니다!
+
+귀찮아
+
+그게 뭔데요?
+
+아 유행어예요?
+
+아 저 유행어 잘 모르는 거 아시잖아요
+
+그래서 릴리스도 알...
+
+한예리 학생 휴대폰 제출합니다
+
+저 방송 중이라서요
+
+선생님 새로 오셔서 못 들으셨나 보다
+
+이거 교장쌤도 허락하신 건데?
+
+마지막입니다
+
+휴대폰 제출합니다
+
+그럼 선생님이 제 팬들한테 직접 얘기하실래요?
+
+미쳤어요? 지금 뭐 하는 거예요?
+
+미친 건 이 반 학생들입니다
+
+학교가 생각했던 것보다 더 개판입니다
+
+선생보다 머리 위에 있으려는 것들
+
+선생을 공기놀이 대상으로 다루는 것들
+
+존경보다 구경거리로 만드는 것들
+
+지금부터 이런 것들을
+
+교권 침해로 간주합니다
+
+도전은 언제나 응하겠지만
+
+처벌은 각오해야 할 겁니다
+"""
+
+    result = translate_text(
+        scene,
+        "ko",
+        "en"
+    )
+
+    print("\n===== TEST OUTPUT =====\n")
+    print(result)
+    print("\n=======================\n")
